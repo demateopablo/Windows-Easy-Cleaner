@@ -19,10 +19,11 @@ echo    [38;5;10m[1][0m [38;5;14mLimpiar temporales %% temp %%[0m
 echo    [38;5;10m[2][0m [38;5;14mLimpiar temporales %% windir %%\temp[0m
 echo    [38;5;10m[3][0m [38;5;14mLimpiar con cleanmgr[0m
 echo    [38;5;10m[4][0m [38;5;14mLimpiar todo[0m
+echo    [38;5;10m[5][0m [38;5;14mConfigurar cleanmgr /sageset:1[0m
 echo    [38;5;10m[0][0m [38;5;14mSalir[0m
 echo.
 
-choice /c 01234 /n /m "     -> Elegi una opcion: "
+choice /c 012345 /n /m "     -> Elegi una opcion: "
 set opcion=%errorlevel%
 
 if "%opcion%"=="2" (
@@ -30,7 +31,15 @@ if "%opcion%"=="2" (
     goto menu
 )
 if "%opcion%"=="3" (
-    call :clearWindirTemp
+    call :checkSagerunConfig
+    if "%sagerunConfig%"=="no" (
+        echo.
+        echo    El cleanmgr con sagerun:1 no está configurado.
+        echo    Ejecuta primero: cleanmgr /sageset:1 y marca todos los casilleros
+        pause
+        goto menu
+    )
+    call :runCleanmgr
     goto menu
 )
 if "%opcion%"=="4" (
@@ -41,6 +50,10 @@ if "%opcion%"=="5" (
     call :clearTemp
     call :clearWindirTemp
     call :runCleanmgr
+    goto menu
+)
+if "%opcion%"=="6" (
+    call :runCleanmgrSageset
     goto menu
 )
 if "%opcion%"=="1" (
@@ -80,4 +93,22 @@ echo    Ejecutando cleanmgr...
 cleanmgr /sagerun:1
 echo    Listo.
 timeout /t 1 /nobreak >nul
+exit /b
+
+:runCleanmgrSageset
+cls
+echo.
+echo    Ejecutando configuracion de cleanmgr sagerun:1...
+cleanmgr /sageset:1
+echo    Listo.
+timeout /t 1 /nobreak >nul
+exit /b
+
+:checkSagerunConfig
+set "sagerunConfig=no"
+for /f "tokens=*" %%i in ('reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches" /s /f "StateFlags0001" 2^>nul') do (
+    set "sagerunConfig=yes"
+    goto :eof
+)
+:eof
 exit /b
