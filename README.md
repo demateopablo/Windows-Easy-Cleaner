@@ -22,7 +22,7 @@ Windows-Easy-Cleaner es un aplicativo sencillo para limpiar archivos temporales 
 
 ### Opción 1: Usuarios que saben usar Git
 
-1. Cloná el repositorio con `git clone https://github.com/demateopablo/Windows-Easy-Cleaner.git  `
+1. Cloná el repositorio con `git clone https://github.com/demateopablo/Windows-Easy-Cleaner.git`  
 2. Entrá a la carpeta del proyecto con cd Windows-Easy-Cleaner  
 3. Ejecutá el archivo Limpia Temporales.bat como administrador
 
@@ -53,7 +53,7 @@ Windows-Easy-Cleaner es un aplicativo sencillo para limpiar archivos temporales 
 
 ## 📄 Licencia
 
-Este proyecto está bajo la licencia [MIT](LICENSE).
+Este proyecto está bajo la licencia [MIT](https://github.com/demateopablo/Windows-Easy-Cleaner/blob/main/LICENSE).
 
 ---
 
