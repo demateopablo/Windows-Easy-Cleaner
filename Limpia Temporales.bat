@@ -67,12 +67,17 @@ echo.
 echo    Opción inválida. Probá de nuevo.
 timeout /t 1 /nobreak >nul
 goto menu
-
 :clearTemp
 cls
 echo.
 echo    Limpiando %%temp%%...
-del /s /q /f "%temp%\*" >nul 2>&1
+
+rem Borramos todas las carpetas dentro de %temp%
+for /d %%x in ("%temp%\*") do rd /s /q "%%x" 2>nul
+
+rem Borramos todos los archivos sueltos dentro de %temp%
+del /f /q "%temp%\*" 2>nul
+
 echo    Listo.
 timeout /t 1 /nobreak >nul
 exit /b
@@ -80,8 +85,14 @@ exit /b
 :clearWindirTemp
 cls
 echo.
-echo    Limpiando %%windir%%\temp...
-del /s /q /f "%windir%\temp\*" >nul 2>&1
+echo    Limpiando %%windir%%\Temp...
+
+rem Borramos todas las carpetas dentro de %windir%\Temp
+for /d %%x in ("%windir%\Temp\*") do rd /s /q "%%x" 2>nul
+
+rem Borramos todos los archivos sueltos dentro de %windir%\Temp
+del /f /q "%windir%\Temp\*" 2>nul
+
 echo    Listo.
 timeout /t 1 /nobreak >nul
 exit /b
